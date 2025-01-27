@@ -3,7 +3,8 @@ from inspect_ai import Task, task
 from inspect_ai.dataset import example_dataset
 from inspect_ai.scorer import model_graded_fact
 from inspect_ai.solver import (               
-  solver, chain, prompt_template, generate, self_critique
+  solver, chain, prompt_template, generate, self_critique, chain_of_thought,
+
 )                                          
 
 DEFAULT_PROMPT="{prompt}"
@@ -34,11 +35,18 @@ def critique():
     )
 
 @solver
-def chain_of_thought():
+def CoT():
     return chain(
         chain_of_thought(),
         generate(), 
-        self_critique()
+    )
+
+@solver
+def CoT_critique():
+    return chain(
+        chain_of_thought(),
+        generate(), 
+        self_critique(),
     )
 
 @task
